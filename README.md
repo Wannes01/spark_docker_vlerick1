@@ -1,5 +1,4 @@
-HEEEEY
-# Building solid data pipelines with PySpark
+# Modern data platforms
 
 📚 A course brought to you by the [Data Minded Academy].
 
