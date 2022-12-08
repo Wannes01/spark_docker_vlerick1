@@ -1,0 +1,19 @@
+# Use an official Python runtime as a base image
+FROM python:3.9-slim-buster
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --upgrade pip -r requirements.txt
+
+# Define environment variable
+ENV NAME AWS_ACCESS_KEY_ID=
+    NAME AWS_SECRET_ACCESS_KEY=
+
+# Run app.py when the container launches
+ENTRYPOINT ['ETL_project']
+CMD ["run", "ETL_project.py"]
