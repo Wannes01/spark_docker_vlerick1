@@ -20,16 +20,16 @@ df_pre.show()
 df_after.show()
 
 #2. Convert the Spark DataFrames to Pandas DataFrames
+import pandas as pd
+import numpy as np
 pre = df_pre.toPandas()
 after = df_after.toPandas()
 
 #3. Rerun the same ML training and scoring logic that you had created prior 
 #   to this class, starting with the Pandas DataFrames you got in step 2
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+# import matplotlib.pyplot as plt
+# import seaborn as sns
 import warnings
 warnings.filterwarnings("ignore")
 from sklearn.preprocessing import LabelEncoder, StandardScaler, MinMaxScaler

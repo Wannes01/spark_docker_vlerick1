@@ -8,11 +8,13 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --upgrade pip -r requirements.txt
+RUN pip install --upgrade /bin/bash python-api
+    pip -r requirements.txt bin/bash python-api
+    pip install -y openjdk-8-jdk python3-venv bin/bash python-api
 
 # Define environment variable
-ENV NAME AWS_ACCESS_KEY_ID=
-    NAME AWS_SECRET_ACCESS_KEY=
+ENV AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY
 
 # Run app.py when the container launches
 ENTRYPOINT ['ETL_project']
