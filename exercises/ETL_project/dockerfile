@@ -16,6 +16,8 @@ RUN pip install --upgrade /bin/bash python-api
 ENV AWS_ACCESS_KEY_ID
 ENV AWS_SECRET_ACCESS_KEY
 
+EXPOSE 8080
+
 # Run app.py when the container launches
 ENTRYPOINT ['ETL_project']
 CMD ["run", "ETL_project.py"]
