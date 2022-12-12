@@ -116,4 +116,5 @@ df_pred = pandas_to_spark(val_pred)
 #   That is entirely normal and inherent to the distributed processing character of Spark.
 
 # # Write the DataFrame to S3 as JSON lines
-df_pred.write.json(f"s3a://{BUCKET}/vlerick/wannes/", mode="overwrite")
+PREFIX = "vlerick/wannes/"
+df_pred.write.json(f"s3a://{BUCKET}/{PREFIX}", mode="overwrite")
