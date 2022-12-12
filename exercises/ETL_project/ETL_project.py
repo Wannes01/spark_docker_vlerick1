@@ -83,7 +83,33 @@ y_pred = pd.DataFrame({"y_pred": array_pred},index=x_val.index)
 val_pred = pd.concat([y_val,y_pred,x_val],axis=1)
 print(val_pred)
 
-df_pred = spark.createDataFrame(val_pred)
+val_pred = pd.concat([y_val,y_pred,x_val],axis=1)
+
+from pyspark.sql.types import StringType, DateType, IntegerType, TimestampType, StructField, StructType
+
+def equivalent_type(f):
+    if f == 'datetime64[ns]': return TimestampType()
+    elif f == 'int64': return LongType()
+    elif f == 'int32': return IntegerType()
+    elif f == 'float64': return DoubleType()
+    elif f == 'float32': return FloatType()
+    else: return StringType()
+
+def define_structure(string, format_type):
+    try: typo = equivalent_type(format_type)
+    except: typo = StringType()
+    return StructField(string, typo)
+
+def pandas_to_spark(pandas_df):
+    columns = list(pandas_df.columns)
+    types = list(pandas_df.dtypes)
+    struct_list = []
+    for column, typo in zip(columns, types): 
+      struct_list.append(define_structure(column, typo))
+    p_schema = StructType(struct_list)
+    return spark.createDataFrame(pandas_df, p_schema)
+
+df_pred = pandas_to_spark(val_pred)
 
 #5. Write this DataFrame to the same S3 bucket dmacademy-course-assets under the prefix 
 #   vlerick/<your_name>/ as JSON lines. It is likely Spark will create multiple files there. 
