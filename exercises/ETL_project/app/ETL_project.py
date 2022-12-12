@@ -30,8 +30,6 @@ after = df_after.toPandas()
 
 # import matplotlib.pyplot as plt
 # import seaborn as sns
-import warnings
-warnings.filterwarnings("ignore")
 from sklearn.preprocessing import LabelEncoder, StandardScaler, MinMaxScaler
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
@@ -154,47 +152,47 @@ predictions=pd.merge(XY_test, df_rfcpred, left_index=True, right_index=True)
 print(predictions)
 
 #4. Convert the dataset of results back to a Spark DataFrame
-df_pred = createDataFrame(predictions)
+# df_pred = createDataFrame(predictions)
 
 #5. Write this DataFrame to the same S3 bucket dmacademy-course-assets under the prefix 
 #   vlerick/<your_name>/ as JSON lines. It is likely Spark will create multiple files there. 
 #   That is entirely normal and inherent to the distributed processing character of Spark.
 
-import boto3
-import io
+# import boto3
+# import io
 
-# Set the S3 bucket name and prefix
-BUCKET = "dmacademy-course-assets"
-prefix = "vlerick/Wannes/"
+# # Set the S3 bucket name and prefix
+# BUCKET = "dmacademy-course-assets"
+# prefix = "vlerick/Wannes/"
 
-# Get the S3 client
-s3 = boto3.client("s3")
+# # Get the S3 client
+# s3 = boto3.client("s3")
 
-# Write the DataFrame to S3 as JSON lines
-df_pred.to_json(f"s3://{BUCKET}/{prefix}", orient="records", lines=True)
+# # Write the DataFrame to S3 as JSON lines
+# df_pred.to_json(f"s3://{BUCKET}/{prefix}", orient="records", lines=True)
 
-#################
-#Creating Session using Boto3
+# #################
+# #Creating Session using Boto3
 
-session = boto3.Session(
-aws_access_key_id='<key ID>',
-aws_secret_access_key='<secret_key>'
-)
+# session = boto3.Session(
+# aws_access_key_id='<key ID>',
+# aws_secret_access_key='<secret_key>'
+# )
  
-#Create s3 session with boto3
+# #Create s3 session with boto3
 
-s3 = session.resource('s3')
+# s3 = session.resource('s3')
  
-json_buffer = io.StringIO()
+# json_buffer = io.StringIO()
  
-# Create dataframe and convert to pandas
-df = spark.range(4).withColumn("organisation", lit("stackoverflow"))
-df_p = df.toPandas()
-df_p.to_json(json_buffer, orient='records')
+# # Create dataframe and convert to pandas
+# df = spark.range(4).withColumn("organisation", lit("stackoverflow"))
+# df_p = df.toPandas()
+# df_p.to_json(json_buffer, orient='records')
  
-#Create s3 object
-object = s3.Object('<bucket-name>', '<JSON file name>')
+# #Create s3 object
+# object = s3.Object('<bucket-name>', '<JSON file name>')
  
-#Put the object into bucket
-result = object.put(Body=json_buffer.getvalue())
-###############
+# #Put the object into bucket
+# result = object.put(Body=json_buffer.getvalue())
+# ###############
