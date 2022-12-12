@@ -13,7 +13,7 @@ COPY . /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
-    # pip install -y openjdk-8-jdk python3-venv
+    pip install -y openjdk-8-jdk python3-venv
 
 
 # Define environment variable
