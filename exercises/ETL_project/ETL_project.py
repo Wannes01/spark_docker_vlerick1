@@ -76,9 +76,18 @@ for categorical_feature in x_head_cat:
 seed = 123 
 x_train, x_val, y_train, y_val = train_test_split(x,y,test_size=0.3, random_state = seed)
 
-rfreg = RandomForestRegressor(max_depth=10, min_samples_leaf =1, random_state=0).fit(x_train, y_train)
+rfreg = RandomForestRegressor(max_depth=10, min_samples_leaf =1, random_state=1).fit(x_train, y_train)
 
 array_pred = np.round(rfreg.predict(x_val),0)
 y_pred = pd.DataFrame({"y_pred": array_pred},index=x_val.index) 
 val_pred = pd.concat([y_val,y_pred,x_val],axis=1)
 print(val_pred)
+
+df_pred = spark.createDataFrame(val_pred)
+
+#5. Write this DataFrame to the same S3 bucket dmacademy-course-assets under the prefix 
+#   vlerick/<your_name>/ as JSON lines. It is likely Spark will create multiple files there. 
+#   That is entirely normal and inherent to the distributed processing character of Spark.
+
+# # Write the DataFrame to S3 as JSON lines
+df_pred.write.json(f"s3a://{BUCKET}/vlerick/wannes/", mode="overwrite")

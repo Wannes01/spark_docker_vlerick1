@@ -1,6 +1,9 @@
 # Use an official Python runtime as a base image
 FROM python:3.9-slim-buster
 
+RUN useradd -ms /bin/bash python-api
+USER python-api
+
 # Set the working directory to /app
 WORKDIR /app
 
@@ -8,9 +11,9 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --upgrade /bin/bash python-api
-    pip -r requirements.txt bin/bash python-api
-    pip install -y openjdk-8-jdk python3-venv bin/bash python-api
+RUN pip install --upgrade pip /bin/bash python-api
+    pip -r requirements.txt /bin/bash python-api
+    pip install -y openjdk-8-jdk python3-venv /bin/bash python-api
 
 # Define environment variable
 ENV AWS_ACCESS_KEY_ID
