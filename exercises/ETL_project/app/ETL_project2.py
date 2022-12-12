@@ -27,8 +27,6 @@ after = df_after.toPandas()
 
 #3. Rerun the same ML training and scoring logic that you had created prior 
 #   to this class, starting with the Pandas DataFrames you got in step 2
-import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 
