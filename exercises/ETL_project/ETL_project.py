@@ -1,21 +1,14 @@
 from pyspark import SparkConf
 from pyspark.sql import SparkSession
-import os
 
 BUCKET = "dmacademy-course-assets"
 KEY1 = "vlerick/after_release.csv"
 KEY2 = "vlerick/pre_release.csv"
 
-if 'AWS_SECRET_ACCESS_KEY' in os.environ:
-    config = {
-        "spark.jars.packages": "org.apache.hadoop:hadoop-aws:3.3.1",
-        "spark.hadoop.fs.s3a.aws.credentials.provider": "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider",
-    }
-else:
-    config = {
-        "spark.jars.packages": "org.apache.hadoop:hadoop-aws:3.3.1",
-        "spark.hadoop.fs.s3a.aws.credentials.provider": "com.amazonaws.auth.InstanceProfileCredentialsProvider",
-    }
+config = {
+    "spark.jars.packages": "org.apache.hadoop:hadoop-aws:3.3.1",
+    "spark.hadoop.fs.s3a.aws.credentials.provider": "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider",
+}
 
 conf = SparkConf().setAll(config.items())
 spark = SparkSession.builder.config(conf=conf).getOrCreate()
