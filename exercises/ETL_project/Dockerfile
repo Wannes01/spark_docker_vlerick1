@@ -1,6 +1,11 @@
 # Use an official Python runtime as a base image
 FROM python:3.9-slim-buster
 
+RUN apt-get update && \
+    apt-get install -y default-jdk && \
+    apt-get install -y ant && \
+    apt-get clean;
+
 RUN useradd -ms /bin/bash python-api
 USER python-api
 
@@ -12,11 +17,11 @@ COPY . /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt && \
-    pip install -y openjdk-8-jdk python3-venv
+    pip install -r requirements.txt
 
-ENV JAVA_HOME /usr/lib/jvm/java
-ENV PATH $JAVA_HOME/bin:$PATH
+
+# ENV JAVA_HOME /usr/lib/jvm/java
+# ENV PATH $JAVA_HOME/bin:$PATH
 # Define environment variable
 # ENV AWS_ACCESS_KEY_ID=your_access_key_id
 # ENV AWS_SECRET_ACCESS_KEY=your_secret_access_key
